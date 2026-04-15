@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../widgets/mine_cell.dart';
+import 'about_screen.dart';
 
 class MinesweeperScreen extends StatelessWidget {
   const MinesweeperScreen({super.key});
@@ -7,32 +8,48 @@ class MinesweeperScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Buscaminas')),
+      appBar: AppBar(
+        title: const Text('Buscaminas'),
+      ),
+
       body: SafeArea(
         child: Column(
           children: [
-            // Status
             Container(
               height: 60,
               color: Colors.grey[300],
               child: const Center(
                 child: Text(
                   'STATUS: 349 segundos | Minas: 10 | Cuadros: 56',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),
                 ),
               ),
             ),
             const Divider(height: 1),
-
-            // Área de Juego
             Expanded(
-              child: _gameBoard(), // 👈 AQUÍ se usa
+              child: _gameBoard(),
             ),
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        tooltip: 'About',
+        child: const Icon(Icons.info_outline),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const AboutScreen(),
+            ),
+          );
+        },
+      ),
     );
   }
+
   Widget _gameBoard() {
     return Center(
       child: Padding(
@@ -41,12 +58,13 @@ class MinesweeperScreen extends StatelessWidget {
           aspectRatio: 1.0,
           child: GridView.builder(
             physics: const NeverScrollableScrollPhysics(),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 8, // 8 columnas
+            gridDelegate:
+                const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 8,
               crossAxisSpacing: 2.0,
               mainAxisSpacing: 2.0,
             ),
-            itemCount: 64, // 8x8 = 64 celdas
+            itemCount: 64,
             itemBuilder: (context, index) {
               return MineCell(index: index);
             },
@@ -54,5 +72,5 @@ class MinesweeperScreen extends StatelessWidget {
         ),
       ),
     );
-}
+  }
 }

@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
       title: 'Buscaminas',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.teal,
+          seedColor: const Color.fromARGB(255, 212, 212, 212),
           primary: const Color.fromARGB(255, 132, 38, 209),
           secondary: const Color.fromARGB(255, 96, 159, 241),
         ),

@@ -22,8 +22,12 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
           seedColor: Colors.teal,
-          primary: Colors.teal,
-          secondary: Colors.orangeAccent,
+          primary: const Color.fromARGB(255, 132, 38, 209),
+          secondary: const Color.fromARGB(255, 96, 159, 241),
+        ),
+        scaffoldBackgroundColor: const Color.fromARGB(255, 156, 119, 153),
+        textTheme: const TextTheme(
+          bodyMedium: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
         ),
         useMaterial3: true,
       ),

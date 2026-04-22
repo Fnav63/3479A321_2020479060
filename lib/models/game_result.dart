@@ -4,7 +4,7 @@ class GameResult {
   final bool isVictory;
   final String difficulty;
 
-  GameResult({
+  const GameResult({
     required this.date,
     required this.timeSpent,
     required this.isVictory,

@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_primer_proyecto/ui/screens/menu_screen.dart';
 import '../widgets/mine_cell.dart';
-import 'about_screen.dart';
-import 'history_screen.dart';
 
 class MinesweeperScreen extends StatelessWidget {
   const MinesweeperScreen({super.key});
@@ -12,30 +9,6 @@ class MinesweeperScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Buscaminas'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.history),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => const HistoryScreen(),
-                  ),
-                );
-              },
-          ),
-          IconButton(
-            icon: const Icon(Icons.menu),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => const MenuScreen(),
-                  ),
-                );
-              },
-          ),
-        ],
       ),
 
       body: SafeArea(
@@ -60,18 +33,6 @@ class MinesweeperScreen extends StatelessWidget {
             ),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        tooltip: 'About',
-        child: const Icon(Icons.info_outline),
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const AboutScreen(),
-            ),
-          );
-        },
       ),
     );
   }

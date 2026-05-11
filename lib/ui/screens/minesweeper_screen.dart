@@ -39,6 +39,12 @@ class _MinesweeperScreenState extends State<MinesweeperScreen> {
     super.dispose();
   }
 
+  void _onCellTapped(int index) {
+    setState(() {
+      _cells[index].isRevealed = true; // Actualizamos el dato
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
@@ -99,7 +105,10 @@ class _MinesweeperScreenState extends State<MinesweeperScreen> {
             ),
             itemCount: 64,
             itemBuilder: (context, index) {
-              return MineCell(index: index);
+              return MineCell(
+                cell: _cells[index],
+                onTap: () => _onCellTapped(index),
+              );// Cada celda es un widget MineCell
             },
           ),
         ),

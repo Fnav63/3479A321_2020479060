@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:logger/logger.dart';
+//import 'package:logger/logger.dart';
 import 'ui/screens/minesweeper_screen.dart';
 import 'ui/screens/about_screen.dart';
 import 'ui/screens/history_screen.dart';
 import 'ui/screens/menu_screen.dart';
 
-var logger = Logger();
+//var logger = Logger();
 
 void main() {
-  logger.d('Iniciando la aplicación de Buscaminas'); // Debug
+  /*logger.d('Iniciando la aplicación de Buscaminas'); // Debug
   logger.i('Iniciando la aplicación de Buscaminas'); // Info
   logger.w('Iniciando la aplicación de Buscaminas'); // Warning
-  logger.e('Iniciando la aplicación de Buscaminas'); // Error
+  logger.e('Iniciando la aplicación de Buscaminas'); // Error*/
   runApp(const MyApp());
 }
 

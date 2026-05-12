@@ -11,6 +11,27 @@ class MineCell extends StatelessWidget {
     required this.onTap,
   });
 
+    Widget _buildCellContent() {
+    if (!cell.isRevealed) {
+      return const SizedBox.shrink();
+    }
+    if (cell.isBomb) {
+      return Image.asset(
+        'assets/icons/mine.png',
+        width: 24,
+        height: 24,
+        fit: BoxFit.contain,
+      );
+    }
+    return Text(
+      '${cell.index}',
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        color: Colors.blueGrey,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -18,14 +39,16 @@ class MineCell extends StatelessWidget {
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-          color: theme.colorScheme.secondary,
+          color: cell.isRevealed
+              ? (cell.isBomb ? Colors.red[200] : Colors.grey[300])
+              : theme.colorScheme.secondary,
           border: Border.all(
             color: theme.colorScheme.outline,
             width: 1.5,
           ),
         ),
         child: Center(
-          child: cell.isRevealed ? Image.asset('assets/icons/mine.png', width: 24, height: 24, fit: BoxFit.contain): const SizedBox.shrink(),
+          child: _buildCellContent(),
         ),
       ),
     );

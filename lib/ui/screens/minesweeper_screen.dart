@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../widgets/mine_cell.dart';
 import '../../viewmodels/game_view_model.dart';
+import '../../viewmodels/settings_view_model.dart';
 
 class MinesweeperScreen extends StatelessWidget {
   const MinesweeperScreen({super.key});
@@ -9,9 +10,7 @@ class MinesweeperScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final viewModel = context.watch<GameViewModel>();
-    final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
-    final String difficulty = args?['difficulty'] ?? 'Desconocida';
-    final int gridSize = args?['gridSize'] ?? 8;
+    final settingsVM = context.watch<SettingsViewModel>();
 
     return Scaffold(
       appBar: AppBar(
@@ -37,7 +36,7 @@ class MinesweeperScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                'Dificultad: $difficulty | Tamaño: ${gridSize}x$gridSize',
+                'Dificultad: ${settingsVM.difficulty} | Tamaño: ${settingsVM.gridSize}x${settingsVM.gridSize}',
                 style: const TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
@@ -58,12 +57,12 @@ class MinesweeperScreen extends StatelessWidget {
           aspectRatio: 1.0,
           child: GridView.builder(
             physics: const NeverScrollableScrollPhysics(),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 8,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: viewModel.gridSize,
               crossAxisSpacing: 2.0,
               mainAxisSpacing: 2.0,
             ),
-            itemCount: 64,
+            itemCount: viewModel.totalCells,
             itemBuilder: (context, index) {
               final currentCell = viewModel.cells[index];
               return MineCell(

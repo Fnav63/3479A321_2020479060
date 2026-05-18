@@ -11,23 +11,34 @@ class MineCell extends StatelessWidget {
     required this.onTap,
   });
 
-    Widget _buildCellContent() {
-    if (!cell.isRevealed) {
-      return const SizedBox.shrink();
-    }
+  Widget _buildCellContent() {
+    if (!cell.isRevealed) return const SizedBox.shrink();
     if (cell.isBomb) {
       return Image.asset(
         'assets/icons/mine.png',
         width: 24,
         height: 24,
-        fit: BoxFit.contain,
       );
     }
+    if (cell.adjacentMines == 0) return const SizedBox.shrink();
+
+    // Paleta de colores clásica
+    Color numberColor;
+    switch (cell.adjacentMines) {
+      case 1: numberColor = Colors.blue; break;
+      case 2: numberColor = Colors.green; break;
+      case 3: numberColor = Colors.red; break;
+      case 4: numberColor = Colors.purple; break;
+      case 5: numberColor = Colors.brown; break;
+      default: numberColor = Colors.black87;
+    }
+
     return Text(
-      '${cell.index}',
-      style: const TextStyle(
+      '${cell.adjacentMines}',
+      style: TextStyle(
         fontWeight: FontWeight.bold,
-        color: Colors.blueGrey,
+        fontSize: 18,
+        color: numberColor,
       ),
     );
   }

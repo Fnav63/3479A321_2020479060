@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../core/services/storage_service.dart';
+import 'package:provider/provider.dart';
+import '../../viewmodels/settings_view_model.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -23,12 +25,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
     await StorageService.saveUsername(_nameController.text);
     await StorageService.saveDifficulty(_selectedDifficulty);
     if (mounted) {
+      context.read<SettingsViewModel>().refreshSettings();
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Guardado correctamente')),
       );
     }
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

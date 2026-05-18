@@ -5,9 +5,10 @@ import 'ui/screens/about_screen.dart';
 import 'ui/screens/history_screen.dart';
 import 'ui/screens/menu_screen.dart';
 import 'package:provider/provider.dart';
-import 'viewmodels/game_view_model.dart';
 import 'core/services/storage_service.dart';
 import 'ui/screens/settings_screen.dart';
+import 'viewmodels/settings_view_model.dart';
+
 
 //var logger = Logger();
 
@@ -18,7 +19,14 @@ void main() async {
   logger.e('Iniciando la aplicación de Buscaminas'); // Error*/
   WidgetsFlutterBinding.ensureInitialized();
   await StorageService.init();
-  runApp(const MyApp());
+  runApp(    
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => SettingsViewModel()),
+      ],
+      child: const MyApp(),
+      ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -32,10 +40,7 @@ class MyApp extends StatelessWidget {
       // Mapa centralizado de Rutas Nombradas
       routes: {
       '/menu': (context) => const MenuScreen(),
-      '/game': (context) => ChangeNotifierProvider(
-        create: (context) => GameViewModel(),
-        child: const MinesweeperScreen(),
-      ),
+      '/game': (context) => const MinesweeperScreen(),
       '/history': (context) => const HistoryScreen(),
       '/about': (context) => const AboutScreen(),
       '/settings': (context) => const SettingsScreen(),

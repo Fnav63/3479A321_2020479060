@@ -23,10 +23,10 @@ class MinesweeperScreen extends StatelessWidget {
             Container(
               height: 60,
               color: Colors.grey[300],
-              child: const Center(
+              child: Center(
                 child: Text(
-                  'STATUS: 349 segundos | Minas: 10 | Cuadros: 56',
-                  style: TextStyle(
+                  'STATUS: ${viewModel.secondsElapsed} segundos | Minas: 10',
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
                   ),

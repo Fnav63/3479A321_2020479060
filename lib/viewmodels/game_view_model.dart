@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import '../models/cell_model.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 class GameViewModel extends ChangeNotifier {
   late List<CellModel> _cells;
@@ -14,6 +15,8 @@ class GameViewModel extends ChangeNotifier {
 
   final int gridSize;
   late int totalCells;
+
+  final AudioPlayer _sfxPlayer = AudioPlayer();
 
   bool get isGameOver => _isGameOver;
   List<CellModel> get cells => _cells;
@@ -65,6 +68,11 @@ class GameViewModel extends ChangeNotifier {
     });
   }
 
+  void _playSound(String fileName) async {
+    await _sfxPlayer.release();
+    await _sfxPlayer.play(AssetSource('audio/$fileName'));
+  }
+
   void revealCell(int index) {
     if (_isGameOver || _cells[index].isRevealed) return;
     if (_isFirstTap) {
@@ -73,9 +81,13 @@ class GameViewModel extends ChangeNotifier {
     }
     _cells[index].isRevealed = true;
     if (_cells[index].isBomb) {
+      _playSound('explosion.mp3');
       _isGameOver = true;
       _timer?.cancel();
       _revealAll();
+    }
+    else {
+      _playSound('onTap.mp3');
     }
     notifyListeners();
   }
@@ -98,6 +110,7 @@ class GameViewModel extends ChangeNotifier {
   @override
   void dispose() {
     _timer?.cancel();
+    _sfxPlayer.dispose();
     super.dispose();
   }
 }

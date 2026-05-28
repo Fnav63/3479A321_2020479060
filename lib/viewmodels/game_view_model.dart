@@ -3,6 +3,10 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import '../models/cell_model.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:sensors_plus/sensors_plus.dart';
+import 'package:logger/logger.dart';
+
+var logger = Logger();
 
 class GameViewModel extends ChangeNotifier {
   late List<CellModel> _cells;
@@ -18,11 +22,14 @@ class GameViewModel extends ChangeNotifier {
 
   final AudioPlayer _sfxPlayer = AudioPlayer();
 
+  StreamSubscription? _accelerometerSubscription;
+
   bool get isGameOver => _isGameOver;
   List<CellModel> get cells => _cells;
 
   GameViewModel({required this.gridSize}) {
     totalCells = gridSize * gridSize; // Ej: 10x10 = 100 celdas
+    _initAccelerometer();
     _generateBoard();
   }
 
@@ -106,11 +113,23 @@ class GameViewModel extends ChangeNotifier {
     _generateBoard();
     notifyListeners();
   }
+  void _initAccelerometer() {
+    _accelerometerSubscription =
+      accelerometerEventStream().listen((AccelerometerEvent event) {
+
+        logger.i(event.x.abs());
+        // Agitar fuerte (eje X) para reiniciar.
+        if (_isGameOver && event.x.abs() > 15.0) {
+          resetGame();
+        }
+      });
+}
 
   @override
   void dispose() {
     _timer?.cancel();
     _sfxPlayer.dispose();
+    _accelerometerSubscription?.cancel();
     super.dispose();
   }
 }
